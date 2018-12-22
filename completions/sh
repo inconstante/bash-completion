@@ -5,6 +5,17 @@ _sh()
     local cur prev words cword
     _init_completion || return
 
+    # After the `-c' option, sh takes a command, so complete according
+    # to its completion definition.
+    local i
+    for (( i=1; i <= COMP_CWORD; i++ )); do
+        if [[ ${COMP_WORDS[i]} != -* ]] &&
+           [[ ${COMP_WORDS[i-1]} == "-c" ]]; then
+            _command_offset $i
+            return
+        fi
+    done
+
     case $prev in
         -c)
             return

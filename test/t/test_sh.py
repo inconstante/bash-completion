@@ -17,4 +17,4 @@ class TestSh:
 
     @pytest.mark.complete("sh -c ")
     def test_4(self, completion):
-        assert not completion.list
+        assert completion.list
