@@ -5,7 +5,7 @@ _ssh_queries()
     local queries=$(_comp_xfunc_ssh_query "$1" help)
     [[ $queries ]] || queries="cipher cipher-auth mac kex key key-cert
          key-plain key-sig protocol-version compression sig ciphers macs
-         kexalgorithms pubkeyacceptedkeytypes hostkeyalgorithms
+         kexalgorithms pubkeyacceptedalgorithms hostkeyalgorithms
          hostbasedkeytypes hostbasedacceptedkeytypes"
     COMPREPLY+=($(compgen -W "$queries help" -- "${cur,,}"))
 }
@@ -55,7 +55,7 @@ _comp_xfunc_ssh_options()
         NoHostAuthenticationForLocalhost NumberOfPasswordPrompts
         PasswordAuthentication PermitLocalCommand PKCS11Provider Port
         PreferredAuthentications ProxyCommand ProxyJump ProxyUseFdpass
-        PubkeyAcceptedKeyTypes PubkeyAuthentication RekeyLimit RemoteCommand
+        PubkeyAcceptedAlgorithms PubkeyAuthentication RekeyLimit RemoteCommand
         RemoteForward RequestTTY RevokedHostKeys SecurityKeyProvider SendEnv
         ServerAliveCountMax ServerAliveInterval SetEnv StreamLocalBindMask
         StreamLocalBindUnlink StrictHostKeyChecking SyslogFacility TCPKeepAlive
@@ -188,7 +188,7 @@ _ssh_suboption()
         proxycommand | remotecommand | localcommand)
             COMPREPLY=($(compgen -c -- "$cur"))
             ;;
-        pubkeyacceptedkeytypes)
+        pubkeyacceptedalgorithms)
             COMPREPLY=($(compgen -W '$(_comp_xfunc_ssh_query "$2" key)' -- "$cur"))
             ;;
         requesttty)
